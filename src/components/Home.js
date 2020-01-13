@@ -7,7 +7,7 @@ class Home extends Component {
       .catch(err => console.log(err));
   }
   render() {
-    return <div>Yo</div>;
+    return <div>Yo bros</div>;
   }
 }
 
