@@ -1,7 +1,7 @@
 import React from "react";
 
-const About = () => {
-  return <div style={styles.container}>about</div>;
+const Contact = () => {
+  return <div style={styles.container}>Contact</div>;
 };
 
 const styles = {
@@ -11,4 +11,5 @@ const styles = {
     paddingLeft: "15px"
   }
 };
-export default About;
+
+export default Contact;
