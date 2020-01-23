@@ -1,0 +1,11 @@
+$footer-background: #20232a;
+$footer-font-color: #ffffff;
+
+.footer-container {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  color: $footer-font-color;
+  background: $footer-background;
+  bottom: 0;
+}

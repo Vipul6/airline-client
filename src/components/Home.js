@@ -15,6 +15,11 @@ class Home extends Component {
     };
   }
   componentDidMount() {
+    const routeParams = this.props.match.path;
+    if (routeParams === "/") {
+      this.props.updateActiveLink("home");
+    }
+    
     Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
       .then(res => {
         this.props.getFlightDetails(res.data.data);

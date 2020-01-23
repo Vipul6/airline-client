@@ -18,11 +18,28 @@ $link-hover-color: #61dafb;
     display: flex;
     height: 60px;
 
-    .logo {
+    .logo-container {
       display: flex;
-      height: 100%;
-      color: $link-hover-color;
-      width: calc(100% / 6);
+      width: 100%;
+      height: 60px;
+      .logo {
+        display: flex;
+        height: 100%;
+        color: $link-hover-color;
+        align-items: center;
+
+        .flight-logo {
+          height: 30px;
+          width: 30px;
+          display: flex;
+        }
+
+        .flight-logo-text {
+          display: flex;
+          padding-left: 5px;
+          font-weight: 550;
+        }
+      }
     }
 
     .nav-links-container {
@@ -66,5 +83,45 @@ $link-hover-color: #61dafb;
         z-index: 1;
       }
     }
+
+    .roles-container {
+      .login-button {
+        display: flex;
+        width: 100px;
+        height: 60px;
+        justify-content: center;
+        border: none;
+        outline: none;
+        color: $nav-font-color;
+        background: $nav-background;
+        align-items: center;
+
+        .google-logo {
+          height: 30px;
+          width: 30px;
+        }
+
+        .google-logo-text {
+          display: flex;
+          width: 50%;
+          justify-content: center;
+        }
+      }
+
+      .login-button:hover {
+        cursor: pointer;
+        color: $link-hover-color;
+      }
+
+      .login-button:hover .google-logo {
+        animation: rotate 1s;
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
   }
 }
