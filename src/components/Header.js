@@ -10,6 +10,7 @@ const flightLogo = require("../assets/flight-logo.png");
 const googleLogo = require("../assets/google-logo.png");
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
+  const [menu, setMenuClass] = useState(true);
 
   const updateActiveLink = link => {
     setActiveLink(link);
@@ -65,6 +66,14 @@ const Header = () => {
                   ></img>
                   <span className="google-logo-text">Sign in</span>
                 </button>
+              </div>
+              <div
+                className={menu ? "menu" : "menu-open"}
+                onClick={() => setMenuClass(!menu)}
+              >
+                <span />
+                <span />
+                <span />
               </div>
             </div>
           </header>

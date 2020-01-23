@@ -29,8 +29,8 @@ $link-hover-color: #61dafb;
         align-items: center;
 
         .flight-logo {
-          height: 30px;
-          width: 30px;
+          height: 24px;
+          width: 24px;
           display: flex;
         }
 
@@ -115,6 +115,80 @@ $link-hover-color: #61dafb;
 
       .login-button:hover .google-logo {
         animation: rotate 1s;
+      }
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: -5px;
+      padding-left: 5px;
+      padding-right: 5px;
+
+      span:nth-child(1) {
+        background: $nav-font-color;
+        width: 30px;
+        height: 4px;
+        transform: rotate(0deg);
+        transition: 1s ease;
+        margin-top: 5px;
+      }
+
+      span:nth-child(2) {
+        background: $nav-font-color;
+        width: 30px;
+        height: 4px;
+        transform: rotate(0deg);
+        transition: 1s ease;
+        margin-top: 5px;
+      }
+
+      span:nth-child(3) {
+        background: $nav-font-color;
+        width: 30px;
+        height: 4px;
+        transform: rotate(0deg);
+        transition: 1s ease;
+        margin-top: 5px;
+      }
+    }
+
+    .menu-open {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: -5px;
+      padding-left: 5px;
+      padding-right: 5px;
+
+      span:nth-child(1) {
+        background: $nav-font-color;
+        width: 30px;
+        height: 4px;
+        transform: rotate(45deg);
+        position: fixed;
+        transition: 1s ease-in-out;
+      }
+
+      span:nth-child(3) {
+        background: $nav-font-color;
+        width: 30px;
+        height: 4px;
+        transform: rotate(135deg);
+        transition: 1s ease-in-out;
+      }
+    }
+
+    @media only screen and (min-width: 621px) {
+      .menu, .menu-open {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width: 620px) {
+      .nav-links-container {
+        display: none;
       }
     }
   }
