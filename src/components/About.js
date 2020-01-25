@@ -15,4 +15,5 @@ const styles = {
     paddingLeft: "15px"
   }
 };
+
 export default About;

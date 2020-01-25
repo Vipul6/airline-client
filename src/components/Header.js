@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Spinner from "./Spinner";
-import "./header.scss";
+import "../styles/header.scss";
 
 const AsyncHome = lazy(() => import("./Home"));
 const AsyncAbout = lazy(() => import("./About"));

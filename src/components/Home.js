@@ -4,14 +4,17 @@ import { connect } from "react-redux";
 import Spinner from "./Spinner";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import "./home.scss";
+import Snackbar from "./Snackbar";
+import "../styles/home.scss";
+
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isLoaded: false,
-      flightsDetail: []
+      flightsDetail: [],
+      hasApiError: false
     };
   }
   componentDidMount() {
@@ -19,7 +22,7 @@ class Home extends Component {
     if (routeParams === "/") {
       this.props.updateActiveLink("home");
     }
-    
+
     Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
       .then(res => {
         this.props.getFlightDetails(res.data.data);
@@ -30,9 +33,9 @@ class Home extends Component {
       })
       .catch(err => {
         this.setState({
-          isLoaded: true
+          isLoaded: true,
+          hasApiError: true
         });
-        console.log(err);
       });
   }
   getCardsData() {
@@ -57,8 +60,15 @@ class Home extends Component {
       <React.Fragment>
         {!this.state.isLoaded ? (
           <Spinner />
+        ) : !this.state.hasApiError ? (
+          <div className="flight-details">{this.getCardsData()} </div>
         ) : (
-          <div className="flight-details">{this.getCardsData()}</div>
+          <div className="snackbar-alignment">
+            <Snackbar
+              message="Server is down, Please try again after sometime."
+              alertType="failure"
+            />
+          </div>
         )}
       </React.Fragment>
     );
