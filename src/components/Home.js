@@ -1,25 +1,18 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { connect } from "react-redux";
-import Spinner from "./Spinner";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import Snackbar from "./Snackbar";
-import "../styles/home.scss";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const Home = props => {
+  const [snackbar, updateSnackbar] = useState({ showSnackbar: false });
 
-    this.state = {
-      isLoaded: false,
-      flightsDetail: [],
-      hasApiError: false,
+  const hideSnackbar = () => {
+    updateSnackbar({
       showSnackbar: false
-    };
-  }
-  componentDidMount() {
-    const googleId = this.props.location.search;
+    });
+  };
+
+  const googleId = props.location.search;
+  useEffect(() => {
 
     if (googleId) {
       Axios.get(
@@ -30,13 +23,13 @@ class Home extends Component {
           sessionStorage.setItem("userName", user.name);
           sessionStorage.setItem("id", user.id);
 
-          this.setState({
+          updateSnackbar({
             showSnackbar: true,
-            snackbar: (
+            snackbarContent: (
               <Snackbar
                 message={`Welcome ${user.name}.`}
                 alertType="success"
-                hideSnackbar={this.hideSnackbar}
+                hideSnackbar={hideSnackbar}
               />
             )
           });
@@ -48,110 +41,38 @@ class Home extends Component {
           if (err.response && err.response.status === 401) {
             errorMessage = "Not authorized";
           }
-          this.setState({
+          updateSnackbar({
             showSnackbar: true,
-            snackbar: (
-              <Snackbar
-                message={errorMessage}
-                hideSnackbar={this.hideSnackbar}
-              />
+            snackbarContent: (
+              <Snackbar message={errorMessage} hideSnackbar={hideSnackbar} />
             )
           });
         });
     }
+  }, [googleId]);
 
-    const routeParams = this.props.match.path;
+  const routeParams = props.match.path;
 
-    if (routeParams === "/") {
-      this.props.updateActiveLink("home");
-    }
-
-    Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
-      .then(res => {
-        this.props.getFlightDetails(res.data.data);
-        this.setState({
-          flightsDetail: res.data.data,
-          isLoaded: true
-        });
-      })
-      .catch(err => {
-        this.setState({
-          isLoaded: true,
-          showSnackbar: true,
-          snackbar: (
-            <Snackbar
-              message="Server is down, Please try again after sometime."
-              hideSnackbar={this.hideSnackbar}
-            />
-          )
-        });
-      });
+  if (routeParams === "/") {
+    props.updateActiveLink("home");
   }
 
-  checkAuthorization = () => {
-    const id = sessionStorage.getItem("id");
-    if (!id) {
-      this.setState({
-        showSnackbar: true,
-        snackbar: (
-          <Snackbar
-            message="Please login first."
-            hideSnackbar={this.hideSnackbar}
-          />
-        )
-      });
-    }
-  };
-
-  getCardsData() {
-    const flights = this.state.flightsDetail.map(data => {
-      return (
-        <Card
-          key={data._id}
-          className="card-view"
-          onClick={this.checkAuthorization}
-        >
-          <CardContent>
-            <p>Souce: {data.source} </p>
-            <p>Destination: {data.destination}</p>
-          </CardContent>
-        </Card>
-      );
-    });
-    return flights;
-  }
-
-  hideSnackbar = () => {
-    this.setState({
-      showSnackbar: false
-    });
-  };
-
-  render() {
-    return (
-      <React.Fragment>
-        <div className="snackbar-alignment">
-          {this.state.showSnackbar ? this.state.snackbar : null}
-        </div>
-        {!this.state.isLoaded ? (
-          <Spinner />
-        ) : (
-          <div className="flight-details">{this.getCardsData()} </div>
-        )}
-      </React.Fragment>
-    );
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  const { flightDetails } = state;
-  return { flightDetails };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getFlightDetails: details =>
-      dispatch({ type: "GETFLIGHTDETAILS", payload: details })
-  };
+  return (
+    <React.Fragment>
+      <div className="snackbar-alignment">
+        {snackbar.showSnackbar ? snackbar.snackbarContent : null}
+      </div>
+      <div style={styles.container}>Home</div>;
+    </React.Fragment>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const styles = {
+  container: {
+    marginTop: "70px",
+    paddingRight: "15px",
+    paddingLeft: "15px"
+  }
+};
+
+export default Home;

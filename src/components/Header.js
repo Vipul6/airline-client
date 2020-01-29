@@ -1,9 +1,10 @@
 import React, { Suspense, lazy, useState } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Spinner from "./Spinner";
+import Home from "./Home";
 import "../styles/header.scss";
 
-const AsyncHome = lazy(() => import("./Home"));
+const AsyncFlight = lazy(() => import("./Flight"));
 const AsyncAbout = lazy(() => import("./About"));
 const AsyncContact = lazy(() => import("./Contact"));
 const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
@@ -41,6 +42,15 @@ const Header = () => {
                   ) : null}
                 </Link>
                 <Link
+                  className={activeLink === "flight" ? "active-link" : "links"}
+                  to="/flight"
+                >
+                  Flights
+                  {activeLink === "flight" ? (
+                    <span className="active-bar"></span>
+                  ) : null}
+                </Link>
+                <Link
                   className={activeLink === "about" ? "active-link" : "links"}
                   to="/about"
                 >
@@ -63,8 +73,7 @@ const Header = () => {
                 <button
                   className="login-button"
                   onClick={() =>
-                    window.location
-                      .href = `${process.env.REACT_APP_BASE_URL}auth/passport/google`
+                    (window.location.href = `${process.env.REACT_APP_BASE_URL}auth/passport/google`)
                   }
                 >
                   <img
@@ -90,7 +99,14 @@ const Header = () => {
               exact
               path="/"
               render={props => (
-                <AsyncHome {...props} updateActiveLink={updateActiveLink} />
+                <Home {...props} updateActiveLink={updateActiveLink} />
+              )}
+            />
+            <Route
+              exact
+              path="/flight"
+              render={props => (
+                <AsyncFlight {...props} updateActiveLink={updateActiveLink} />
               )}
             />
             <Route
