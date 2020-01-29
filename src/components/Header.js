@@ -6,6 +6,8 @@ import "../styles/header.scss";
 const AsyncHome = lazy(() => import("./Home"));
 const AsyncAbout = lazy(() => import("./About"));
 const AsyncContact = lazy(() => import("./Contact"));
+const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
+
 const flightLogo = require("../assets/flight-logo.png");
 const googleLogo = require("../assets/google-logo.png");
 const Header = () => {
@@ -58,7 +60,13 @@ const Header = () => {
                 </Link>
               </nav>
               <div className="roles-container">
-                <button className="login-button">
+                <button
+                  className="login-button"
+                  onClick={() =>
+                    window.location
+                      .href = `${process.env.REACT_APP_BASE_URL}auth/passport/google`
+                  }
+                >
                   <img
                     className="google-logo"
                     alt="google-logo"
@@ -87,16 +95,19 @@ const Header = () => {
             />
             <Route
               path="/about"
+              exact
               render={props => (
                 <AsyncAbout {...props} updateActiveLink={updateActiveLink} />
               )}
             />
             <Route
               path="/contact"
+              exact
               render={props => (
                 <AsyncContact {...props} updateActiveLink={updateActiveLink} />
               )}
             />
+            <Route path="*" component={AsyncPageNotFound} />
           </Switch>
         </Router>
       </Suspense>

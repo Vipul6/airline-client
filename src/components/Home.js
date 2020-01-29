@@ -14,11 +14,54 @@ class Home extends Component {
     this.state = {
       isLoaded: false,
       flightsDetail: [],
-      hasApiError: false
+      hasApiError: false,
+      showSnackbar: false
     };
   }
   componentDidMount() {
+    const googleId = this.props.location.search;
+
+    if (googleId) {
+      Axios.get(
+        `${process.env.REACT_APP_BASE_URL}auth/users?id=${googleId.substr(8)}`
+      )
+        .then(res => {
+          const user = res.data.data;
+          sessionStorage.setItem("userName", user.name);
+          sessionStorage.setItem("id", user.id);
+
+          this.setState({
+            showSnackbar: true,
+            snackbar: (
+              <Snackbar
+                message={`Welcome ${user.name}.`}
+                alertType="success"
+                hideSnackbar={this.hideSnackbar}
+              />
+            )
+          });
+        })
+        .catch(err => {
+          sessionStorage.removeItem("userName");
+          sessionStorage.removeItem("id");
+          let errorMessage = "Server is down, Please try again after sometime.";
+          if (err.response && err.response.status === 401) {
+            errorMessage = "Not authorized";
+          }
+          this.setState({
+            showSnackbar: true,
+            snackbar: (
+              <Snackbar
+                message={errorMessage}
+                hideSnackbar={this.hideSnackbar}
+              />
+            )
+          });
+        });
+    }
+
     const routeParams = this.props.match.path;
+
     if (routeParams === "/") {
       this.props.updateActiveLink("home");
     }
@@ -34,17 +77,39 @@ class Home extends Component {
       .catch(err => {
         this.setState({
           isLoaded: true,
-          hasApiError: true
+          showSnackbar: true,
+          snackbar: (
+            <Snackbar
+              message="Server is down, Please try again after sometime."
+              hideSnackbar={this.hideSnackbar}
+            />
+          )
         });
       });
   }
+
+  checkAuthorization = () => {
+    const id = sessionStorage.getItem("id");
+    if (!id) {
+      this.setState({
+        showSnackbar: true,
+        snackbar: (
+          <Snackbar
+            message="Please login first."
+            hideSnackbar={this.hideSnackbar}
+          />
+        )
+      });
+    }
+  };
+
   getCardsData() {
     const flights = this.state.flightsDetail.map(data => {
       return (
         <Card
           key={data._id}
           className="card-view"
-          onClick={() => console.log(data)}
+          onClick={this.checkAuthorization}
         >
           <CardContent>
             <p>Souce: {data.source} </p>
@@ -55,20 +120,23 @@ class Home extends Component {
     });
     return flights;
   }
+
+  hideSnackbar = () => {
+    this.setState({
+      showSnackbar: false
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
+        <div className="snackbar-alignment">
+          {this.state.showSnackbar ? this.state.snackbar : null}
+        </div>
         {!this.state.isLoaded ? (
           <Spinner />
-        ) : !this.state.hasApiError ? (
-          <div className="flight-details">{this.getCardsData()} </div>
         ) : (
-          <div className="snackbar-alignment">
-            <Snackbar
-              message="Server is down, Please try again after sometime."
-              alertType="failure"
-            />
-          </div>
+          <div className="flight-details">{this.getCardsData()} </div>
         )}
       </React.Fragment>
     );
