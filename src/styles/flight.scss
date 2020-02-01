@@ -9,10 +9,53 @@ $shadow: 0 0 20px rgba(33, 33, 33, 0.2);
 
   .card-view {
     margin-bottom: 20px;
+
+    .material-card-content {
+      cursor: pointer;
+
+      .card-content-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .card-content {
+          flex: 1;
+        }
+      }
+
+      .svg-container {
+        display: flex;
+        align-items: flex-end;
+        flex: 0.1;
+
+        .expand-more {
+          align-items: flex-end;
+          margin-left: auto;
+          transform: rotate(0deg);
+          transition: 0.4s ease-in-out;
+          cursor: pointer;
+        }
+        .expanded {
+          margin-left: auto;
+          transform: rotate(180deg);
+          transition: 0.4s ease-in-out;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .accordion-container {
+      display: flex;
+      width: 100%;
+
+      .accordion-action-btn {
+        display: flex;
+        justify-content: space-between;
+        width: 210px;
+      }
+    }
   }
 
   .card-view:hover {
-    cursor: pointer;
     box-shadow: $shadow;
   }
 }

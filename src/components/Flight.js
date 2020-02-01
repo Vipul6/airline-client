@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import Spinner from "./Spinner";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Collapse from "@material-ui/core/Collapse";
 import Snackbar from "./Snackbar";
 import "../styles/flight.scss";
 
@@ -14,8 +16,8 @@ class Flight extends Component {
     this.state = {
       isLoaded: false,
       flightsDetail: [],
-      hasApiError: false,
-      showSnackbar: false
+      showSnackbar: false,
+      expandedId: null
     };
   }
   componentDidMount() {
@@ -68,22 +70,79 @@ class Flight extends Component {
     }
   };
 
+  updateExpansion = id => {
+    if (this.state.expandedId && this.state.expandedId === id) {
+      this.setState({
+        expandedId: null
+      });
+    } else {
+      this.setState({
+        expandedId: id
+      });
+    }
+  };
+
   getCardsData() {
-    const flights = this.state.flightsDetail.map(data => {
+    return this.state.flightsDetail.map(data => {
       return (
-        <Card
-          key={data._id}
-          className="card-view"
-          onClick={this.checkAuthorization}
-        >
-          <CardContent>
-            <p>Souce: {data.source} </p>
-            <p>Destination: {data.destination}</p>
+        <Card key={data.id} className="card-view">
+          <CardContent
+            className="material-card-content"
+            onClick={() => this.updateExpansion(data.id)}
+          >
+            <div className="card-content-container">
+              <div className="card-content">
+                <p>Source: {data.source} </p>
+                <p>Destination: {data.destination}</p>
+              </div>
+
+              <div className="svg-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className={
+                    this.state.expandedId === data.id
+                      ? "expanded"
+                      : "expand-more"
+                  }
+                  width="25"
+                  height="25"
+                >
+                  <path d="M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 Z" />
+                </svg>
+              </div>
+            </div>
           </CardContent>
+
+          <Collapse
+            in={this.state.expandedId === data.id}
+            timeout="auto"
+            unmountOnExit
+          >
+            <CardContent>
+              <div className="accordion-container">
+                <div className="accordion-action-btn">
+                  <Button
+                    onClick={() => this.checkAuthorization()}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Check in
+                  </Button>
+                  <Button
+                    onClick={() => this.checkAuthorization()}
+                    variant="outlined"
+                    color="secondary"
+                  >
+                    In flight
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Collapse>
         </Card>
       );
     });
-    return flights;
   }
 
   hideSnackbar = () => {
