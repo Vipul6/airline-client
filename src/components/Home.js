@@ -62,7 +62,7 @@ const Home = props => {
       <div className="snackbar-alignment">
         {snackbar.showSnackbar ? snackbar.snackbarContent : null}
       </div>
-      <div style={styles.container}>Home</div>;
+      <div style={styles.container}>Home</div>
     </React.Fragment>
   );
 };
