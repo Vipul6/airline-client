@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import Axios from "axios";
 import { connect } from "react-redux";
 import Spinner from "./Spinner";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Collapse from "@material-ui/core/Collapse";
+import { Card, Collapse, CardContent, Button } from "@material-ui/core";
 import Snackbar from "./Snackbar";
 import "../styles/flight.scss";
+
+const downArrowIcon = require("../assets/svg/down-arrow.svg");
 
 class Flight extends Component {
   constructor(props) {
@@ -23,8 +22,8 @@ class Flight extends Component {
   componentDidMount() {
     const routeParams = this.props.match.path;
 
-    if (routeParams === "/flight") {
-      this.props.updateActiveLink("flight");
+    if (routeParams === "/flights") {
+      this.props.updateActiveLink("flights");
     }
     if (!this.props.flightDetails.length) {
       Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
@@ -36,16 +35,9 @@ class Flight extends Component {
           });
         })
         .catch(err => {
-          this.setState({
-            isLoaded: true,
-            showSnackbar: true,
-            snackbar: (
-              <Snackbar
-                message="Server is down, Please try again after sometime."
-                hideSnackbar={this.hideSnackbar}
-              />
-            )
-          });
+          this.setSnackbarMessage(
+            "Server is down, Please try again after sometime."
+          );
         });
     } else {
       this.setState({
@@ -57,17 +49,16 @@ class Flight extends Component {
 
   checkAuthorization = () => {
     const id = sessionStorage.getItem("id");
-    if (!id) {
-      this.setState({
-        showSnackbar: true,
-        snackbar: (
-          <Snackbar
-            message="Please login first."
-            hideSnackbar={this.hideSnackbar}
-          />
-        )
-      });
-    }
+    const returnValue = id ? true : false;
+    return returnValue;
+  };
+
+  setSnackbarMessage = msg => {
+    this.setState({
+      showSnackbar: true,
+      isLoaded: true,
+      snackbar: <Snackbar message={msg} hideSnackbar={this.hideSnackbar} />
+    });
   };
 
   updateExpansion = id => {
@@ -97,19 +88,15 @@ class Flight extends Component {
               </div>
 
               <div className="svg-container">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
+                <img
                   className={
                     this.state.expandedId === data.id
                       ? "expanded"
                       : "expand-more"
                   }
-                  width="25"
-                  height="25"
-                >
-                  <path d="M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 l 6 6 l 6 -6 Z" />
-                </svg>
+                  src={downArrowIcon}
+                  alt="expand-more"
+                />
               </div>
             </div>
           </CardContent>
@@ -123,14 +110,26 @@ class Flight extends Component {
               <div className="accordion-container">
                 <div className="accordion-action-btn">
                   <Button
-                    onClick={() => this.checkAuthorization()}
+                    onClick={() => {
+                      if (this.checkAuthorization()) {
+                        this.props.history.push(`flights/${data.id}/check-in`);
+                      } else {
+                        this.setSnackbarMessage("Please login first.");
+                      }
+                    }}
                     variant="outlined"
                     color="primary"
                   >
                     Check in
                   </Button>
                   <Button
-                    onClick={() => this.checkAuthorization()}
+                    onClick={() => {
+                      if (this.checkAuthorization()) {
+                        this.props.history.push(`flights/${data.id}/in-flight`);
+                      } else {
+                        this.setSnackbarMessage("Please login first.");
+                      }
+                    }}
                     variant="outlined"
                     color="secondary"
                   >

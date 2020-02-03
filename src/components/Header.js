@@ -8,9 +8,11 @@ const AsyncFlight = lazy(() => import("./Flight"));
 const AsyncAbout = lazy(() => import("./About"));
 const AsyncContact = lazy(() => import("./Contact"));
 const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
+const AsyncCheckIn = lazy(() => import("./CheckIn"));
 
-const flightLogo = require("../assets/flight-logo.png");
-const googleLogo = require("../assets/google-logo.png");
+const flightLogo = require("../assets/images/flight-logo.png");
+const googleLogo = require("../assets/images/google-logo.png");
+
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
   const [menu, setMenuClass] = useState(true);
@@ -42,11 +44,11 @@ const Header = () => {
                   ) : null}
                 </Link>
                 <Link
-                  className={activeLink === "flight" ? "active-link" : "links"}
-                  to="/flight"
+                  className={activeLink === "flights" ? "active-link" : "links"}
+                  to="/flights"
                 >
                   Flights
-                  {activeLink === "flight" ? (
+                  {activeLink === "flights" ? (
                     <span className="active-bar"></span>
                   ) : null}
                 </Link>
@@ -104,7 +106,7 @@ const Header = () => {
             />
             <Route
               exact
-              path="/flight"
+              path="/flights"
               render={props => (
                 <AsyncFlight {...props} updateActiveLink={updateActiveLink} />
               )}
@@ -121,6 +123,13 @@ const Header = () => {
               exact
               render={props => (
                 <AsyncContact {...props} updateActiveLink={updateActiveLink} />
+              )}
+            />
+            <Route
+              path="/flights/:flightId/check-in"
+              exact
+              render={props => (
+                <AsyncCheckIn {...props} updateActiveLink={updateActiveLink} />
               )}
             />
             <Route path="*" component={AsyncPageNotFound} />

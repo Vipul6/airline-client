@@ -32,12 +32,16 @@ $shadow: 0 0 20px rgba(33, 33, 33, 0.2);
           margin-left: auto;
           transform: rotate(0deg);
           transition: 0.4s ease-in-out;
+          width: 30px;
+          height: 30px;
           cursor: pointer;
         }
         .expanded {
           margin-left: auto;
           transform: rotate(180deg);
           transition: 0.4s ease-in-out;
+          width: 30px;
+          height: 30px;
           cursor: pointer;
         }
       }
