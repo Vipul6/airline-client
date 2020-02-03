@@ -131,6 +131,7 @@ $border-color: #3366cc;
         display: flex;
         flex-wrap: wrap;
         padding: 5px;
+        justify-content: center;
 
         .outer-grid {
           width: 55px;
@@ -170,6 +171,10 @@ $border-color: #3366cc;
         }
       }
     }
+  }
+
+  .status-container {
+    font-size: small;
   }
 
   h3 {
