@@ -1,130 +1,17 @@
-$name-bgcolor: #e1ecf4;
+$name-bgcolor: #d5eeff;
+$name-hover-bgcolor: #bfe4ff;
 $occupied-color: #ffffff;
-$vacant-color: rgb(0, 0, 0);
-$grid-occupied-bgcolor: rgb(243, 0, 0);
-$grid-vacant-bgcolor: rgb(4, 255, 66);
+$vacant-color: #000000;
+$grid-occupied-bgcolor: #f30000;
+$grid-vacant-bgcolor: #04ff42;
 $border-color: #3366cc;
+$seat-bgcolor: #ffff00;
 
 .check-in-container {
   .check-in-view {
     display: flex;
     padding: 15px;
     justify-content: center;
-
-    .grid-container {
-      .grid-text {
-        display: flex;
-        justify-content: center;
-      }
-    }
-
-    .passenger-container {
-      display: flex;
-      flex-direction: column;
-      padding: 15px;
-      align-items: center;
-
-      .filter-card-container {
-        width: 300px;
-        margin-top: 10px;
-
-        .filter-card-content {
-          padding: 5px;
-
-          .filter-card-header {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-
-            .svg-container {
-              display: flex;
-              align-items: flex-end;
-              flex: 0.1;
-
-              .expand-more {
-                align-items: flex-end;
-                margin-left: auto;
-                transform: rotate(0deg);
-                transition: 0.4s ease-in-out;
-                width: 30px;
-                height: 30px;
-                cursor: pointer;
-              }
-              .expanded {
-                margin-left: auto;
-                transform: rotate(180deg);
-                transition: 0.4s ease-in-out;
-                width: 30px;
-                height: 30px;
-                cursor: pointer;
-              }
-            }
-
-            .filter-text {
-              margin-left: 5px;
-              flex: 1;
-            }
-          }
-        }
-      }
-
-      .passengers-list {
-        margin-top: 10px;
-
-        .passenger-detail {
-          margin-top: 10px;
-
-          .passenger-name {
-            font-weight: 550;
-            font-size: 15px;
-            background: $name-bgcolor;
-            padding: 3px;
-            cursor: pointer;
-          }
-        }
-      }
-    }
-  }
-  .status-container {
-    display: flex;
-    justify-content: flex-end;
-
-    .status-wrapper {
-      display: flex;
-      width: 200px;
-      justify-content: space-evenly;
-
-      .occupied-status {
-        display: flex;
-
-        .circle {
-          height: 15px;
-          width: 15px;
-          background-color: $grid-occupied-bgcolor;
-          border-radius: 50%;
-          margin-right: 5px;
-        }
-      }
-
-      .vaccant-status {
-        display: flex;
-
-        .circle {
-          height: 15px;
-          width: 15px;
-          background-color: $grid-vacant-bgcolor;
-          border-radius: 50%;
-          margin-right: 5px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .check-in-view {
-    display: flex;
-    flex-direction: column;
 
     .grid-container {
       .grid-view {
@@ -170,7 +57,142 @@ $border-color: #3366cc;
           }
         }
       }
+      .grid-text {
+        display: flex;
+        justify-content: center;
+      }
     }
+
+    .passenger-container {
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      align-items: center;
+
+      .filter-card-container {
+        margin-top: 10px;
+
+        .filter-card-content {
+          padding: 5px;
+
+          .filter-card-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .svg-container {
+              display: flex;
+              align-items: flex-end;
+              flex: 0.1;
+
+              .expand-more {
+                align-items: flex-end;
+                margin-left: auto;
+                transform: rotate(0deg);
+                transition: 0.4s ease-in-out;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+              }
+              .expanded {
+                margin-left: auto;
+                transform: rotate(180deg);
+                transition: 0.4s ease-in-out;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+              }
+            }
+
+            .filter-text {
+              margin-left: 5px;
+              flex: 1;
+            }
+          }
+        }
+      }
+
+      .passengers-list {
+        margin-top: 10px;
+        margin-bottom: 20px;
+
+        .passenger-detail {
+          margin-top: 10px;
+
+          .passenger-name {
+            font-weight: 550;
+            font-size: 15px;
+            background: $name-bgcolor;
+            padding: 3px;
+            border-radius: 4px;
+            
+          }
+
+          .passenger-name:hover {
+            background: $name-hover-bgcolor;
+            cursor: pointer;
+          }
+
+          .seat-number {
+            margin-left: 5px;
+            background: $seat-bgcolor;
+            border-radius: 5px;
+            padding: 3px;
+          }
+
+          .ancilliary-service {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+  .status-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .status-wrapper {
+      display: flex;
+      width: 200px;
+      justify-content: space-evenly;
+
+      .occupied-status {
+        display: flex;
+
+        .circle {
+          height: 15px;
+          width: 15px;
+          background-color: $grid-occupied-bgcolor;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+
+      .vaccant-status {
+        display: flex;
+
+        .circle {
+          height: 15px;
+          width: 15px;
+          background-color: $grid-vacant-bgcolor;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 801px) {
+  .grid-container {
+    width: 490px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .check-in-view {
+    display: flex;
+    flex-direction: column;
   }
 
   .status-container {
@@ -182,50 +204,27 @@ $border-color: #3366cc;
   }
 }
 
-@media only screen and (min-width: 801px) {
-  .grid-container {
-    width: 700px;
+@media only screen and (min-width: 501px) {
+  .filter-card-container {
+    width: 100%
+  }
+}
 
-    .grid-view {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 15px;
+@media only screen and (max-width: 800px) {
+  .filter-card-container {
+    width: 60%
+  }
+}
 
-      .outer-grid {
-        width: 80px;
-        height: 80px;
-        border-radius: 10px;
-        border: 3px solid $border-color;
-        margin: 5px;
+@media only screen and (max-width: 610px) {
+  .filter-card-container {
+    width: 90%;
+  }
+}
 
-        .seat-occupied {
-          color: $occupied-color;
-          background: $grid-occupied-bgcolor;
-        }
 
-        .seat-vaccant {
-          color: $vacant-color;
-          background: $grid-vacant-bgcolor;
-        }
-
-        .seat-occupied,
-        .seat-vaccant {
-          font-weight: bold;
-          height: 60px;
-          width: 60px;
-          display: flex;
-          justify-content: space-between;
-          margin: 10px;
-          border-radius: 5px;
-
-          .seat-details {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-          }
-        }
-      }
-    }
+@media only screen and (max-width: 500px) {
+  .filter-card-container {
+    width: 100%;
   }
 }

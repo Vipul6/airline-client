@@ -1,5 +1,5 @@
-$spinner-color: #07d;
-$spinner-backdrop-color: #ffffff;
+$spinner-color: #0077dd;
+$spinner-backdrop-color: #fff;
 
 .spinner-container {
   position: fixed;
@@ -24,10 +24,7 @@ $spinner-backdrop-color: #ffffff;
 
   .spinner {
     box-sizing: border-box;
-    width: 100px;
-    height: 100px;
     border-radius: 50%;
-    border: 10px solid transparent;
     border-top-color: $spinner-color;
     border-bottom-color: $spinner-color;
     animation: spinner 0.7s ease infinite;
@@ -37,5 +34,21 @@ $spinner-backdrop-color: #ffffff;
 @keyframes spinner {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .spinner {
+    width: 100px;
+    height: 100px;
+    border: 10px solid transparent;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .spinner {
+    width: 70px;
+    height: 70px;
+    border: 7px solid transparent;
   }
 }

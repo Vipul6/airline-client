@@ -12,6 +12,7 @@ import Axios from "axios";
 import Snackbar from "./Snackbar";
 import Spinner from "./Spinner";
 import "../styles/check-in.scss";
+import ChangeSeatDialog from "./ChangeSeatDialog";
 
 const fliterIcon = require("../assets/svg/filter-list.svg");
 const downArrowIcon = require("../assets/svg/down-arrow.svg");
@@ -29,12 +30,14 @@ class CheckIn extends Component {
       checkedIn: false,
       checkInRequired: false,
       wheelChair: false,
-      infants: false
+      infants: false,
+      showDialog: false,
+      dialogContent: null
     };
   }
 
   getFlightIndex = () => {
-    return this.state.flightsDetail.findIndex(
+    return this.state.filteredFlightData.findIndex(
       flight => flight.id.toString() === this.state.flightId
     );
   };
@@ -45,7 +48,7 @@ class CheckIn extends Component {
       this.setSnackbarMessage("Invalid action");
       setTimeout(() => {
         this.props.history.push("/flights");
-      }, 1000);
+      }, 1500);
     }
   };
 
@@ -104,19 +107,23 @@ class CheckIn extends Component {
 
   getGridView = () => {
     const flightIndex = this.getFlightIndex();
-    return this.state.flightsDetail[flightIndex].seatsDetail.map(
-      (seat, index) => {
-        return (
-          <div key={seat.number} className="outer-grid">
-            <div className={seat.isOccupied ? "seat-occupied" : "seat-vaccant"}>
-              <div className="seat-details">
-                <span>{seat.number}</span>
+    if (flightIndex > -1) {
+      return this.state.flightsDetail[flightIndex].seatsDetail.map(
+        (seat, index) => {
+          return (
+            <div key={seat.number} className="outer-grid">
+              <div
+                className={seat.isOccupied ? "seat-occupied" : "seat-vaccant"}
+              >
+                <div className="seat-details">
+                  <span>{seat.number}</span>
+                </div>
               </div>
             </div>
-          </div>
-        );
-      }
-    );
+          );
+        }
+      );
+    }
   };
 
   getStatusIndicator = () => {
@@ -270,24 +277,74 @@ class CheckIn extends Component {
     );
   };
 
+  hideDialog = () => {
+    this.setState({
+      showDialog: false
+    });
+  };
+
   getPassengersDetail = () => {
     const flightIndex = this.getFlightIndex();
-    return this.state.filteredFlightData[flightIndex].passengersDetail.map(
-      (passenger, index) => {
-        return (
-          <div key={passenger.id} className="passenger-detail">
-            <span>{index + 1 + ". "}</span>
-            <span className="passenger-name">{passenger.name}</span>
-            <span>
-              {" " +
-                passenger.seatNumber +
-                " " +
-                passenger.ancilliaryServices.join(", ")}
-            </span>
-          </div>
-        );
-      }
+    if (flightIndex > -1) {
+      return this.state.filteredFlightData[flightIndex].passengersDetail.map(
+        (passenger, index) => {
+          return (
+            <div key={passenger.id} className="passenger-detail">
+              <span>{index + 1 + ". "}</span>
+              <span
+                className="passenger-name"
+                onClick={() =>
+                  this.checkSeatAvailability()
+                    ? this.setState({
+                        showDialog: true,
+                        dialogContent: (
+                          <ChangeSeatDialog
+                            seatsDetail={
+                              this.state.filteredFlightData[flightIndex]
+                                .seatsDetail
+                            }
+                            passenger={passenger}
+                            hideDialog={this.hideDialog}
+                          />
+                        )
+                      })
+                    : this.setState({
+                        showDialog: false,
+                        showSnackbar: true,
+                        isLoaded: true,
+                        snackbar: (
+                          <Snackbar
+                            message={"No seats are vacant."}
+                            hideSnackbar={this.hideSnackbar}
+                          />
+                        )
+                      })
+                }
+              >
+                {passenger.name}
+              </span>
+              {passenger.seatNumber ? (
+                <span className="seat-number">
+                  {" " + passenger.seatNumber + " "}
+                </span>
+              ) : null}
+
+              <span className="ancilliary-service">
+                {passenger.ancilliaryServices.join(", ")}
+              </span>
+            </div>
+          );
+        }
+      );
+    }
+  };
+
+  checkSeatAvailability = () => {
+    const flightIndex = this.getFlightIndex();
+    const seats = this.state.filteredFlightData[flightIndex].seatsDetail.filter(
+      seat => !seat.isOccupied
     );
+    return seats.length ? true : false;
   };
 
   render() {
@@ -314,6 +371,9 @@ class CheckIn extends Component {
                 </div>
               </div>
             </div>
+            <React.Fragment>
+              {this.state.showDialog ? this.state.dialogContent : null}
+            </React.Fragment>
           </div>
         )}
       </React.Fragment>
