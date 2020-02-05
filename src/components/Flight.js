@@ -76,10 +76,10 @@ class Flight extends Component {
   getCardsData() {
     return this.state.flightsDetail.map(data => {
       return (
-        <Card key={data.id} className="card-view">
+        <Card key={data._id} className="card-view">
           <CardContent
             className="material-card-content"
-            onClick={() => this.updateExpansion(data.id)}
+            onClick={() => this.updateExpansion(data._id)}
           >
             <div className="card-content-container">
               <div className="card-content">
@@ -90,7 +90,7 @@ class Flight extends Component {
               <div className="svg-container">
                 <img
                   className={
-                    this.state.expandedId === data.id
+                    this.state.expandedId === data._id
                       ? "expanded"
                       : "expand-more"
                   }
@@ -102,7 +102,7 @@ class Flight extends Component {
           </CardContent>
 
           <Collapse
-            in={this.state.expandedId === data.id}
+            in={this.state.expandedId === data._id}
             timeout="auto"
             unmountOnExit
           >
@@ -112,7 +112,7 @@ class Flight extends Component {
                   <Button
                     onClick={() => {
                       if (this.checkAuthorization()) {
-                        this.props.history.push(`flights/${data.id}/check-in`);
+                        this.props.history.push(`flights/${data._id}/check-in`);
                       } else {
                         this.setSnackbarMessage("Please login first.");
                       }
@@ -125,7 +125,9 @@ class Flight extends Component {
                   <Button
                     onClick={() => {
                       if (this.checkAuthorization()) {
-                        this.props.history.push(`flights/${data.id}/in-flight`);
+                        this.props.history.push(
+                          `flights/${data._id}/in-flight`
+                        );
                       } else {
                         this.setSnackbarMessage("Please login first.");
                       }

@@ -12,6 +12,9 @@ import {
   MenuItem
 } from "@material-ui/core";
 import "../styles/seat-dialog.scss";
+import Axios from "axios";
+import { getFlightDetails } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 const transition = React.forwardRef((props, ref) => {
   return <Slide direction="right" ref={ref} {...props} />;
@@ -19,6 +22,8 @@ const transition = React.forwardRef((props, ref) => {
 
 const ChangeSeatDialog = props => {
   const [seat, setSeat] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     setSeat(event.target.value);
@@ -33,6 +38,22 @@ const ChangeSeatDialog = props => {
         </MenuItem>
       );
     });
+  };
+
+  const handleSeatSubmit = () => {
+    Axios.get(
+      `${process.env.REACT_APP_BASE_URL}flights/${props.flightDetail._id}/change-seat/${props.passenger._id}/${seat}`
+    )
+      .then(res => {
+        dispatch(getFlightDetails(res.data.data));
+        props.hideFilters();
+        props.hideDialog();
+      })
+      .catch(err => {
+        props.hideFilters();
+        props.hideDialog();
+        props.errorCloseDialog();
+      });
   };
 
   return (
@@ -63,10 +84,17 @@ const ChangeSeatDialog = props => {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={props.hideDialog}>
+          <Button color="primary" onClick={props.hideDialog} variant="outlined">
             Cancel
           </Button>
-          <Button color="primary">Submit</Button>
+          <Button
+            color="secondary"
+            onClick={handleSeatSubmit}
+            disabled={!seat}
+            variant="outlined"
+          >
+            Submit
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

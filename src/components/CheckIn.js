@@ -38,7 +38,7 @@ class CheckIn extends Component {
 
   getFlightIndex = () => {
     return this.state.filteredFlightData.findIndex(
-      flight => flight.id.toString() === this.state.flightId
+      flight => flight._id.toString() === this.state.flightId
     );
   };
 
@@ -241,6 +241,7 @@ class CheckIn extends Component {
           control={
             <Checkbox
               color="primary"
+              checked={this.state.checkedIn}
               onChange={this.updateCheckbox("checkedIn")}
             />
           }
@@ -250,6 +251,7 @@ class CheckIn extends Component {
           control={
             <Checkbox
               color="primary"
+              checked={this.state.checkInRequired}
               onChange={this.updateCheckbox("checkInRequired")}
             />
           }
@@ -259,6 +261,7 @@ class CheckIn extends Component {
           control={
             <Checkbox
               color="primary"
+              checked={this.state.wheelChair}
               onChange={this.updateCheckbox("wheelChair")}
             />
           }
@@ -268,6 +271,7 @@ class CheckIn extends Component {
           control={
             <Checkbox
               color="primary"
+              checked={this.state.infants}
               onChange={this.updateCheckbox("infants")}
             />
           }
@@ -276,10 +280,34 @@ class CheckIn extends Component {
       </FormGroup>
     );
   };
-
+  hideFilters = () => {
+    this.setState({
+      checkInRequired: false,
+      wheelChair: false,
+      infants: false,
+      checkedIn: false,
+      showFilter: false
+    });
+  };
   hideDialog = () => {
     this.setState({
-      showDialog: false
+      showDialog: false,
+      flightsDetail: this.props.flightDetails,
+      filteredFlightData: this.props.flightDetails
+    });
+  };
+
+  errorCloseDialog = () => {
+    this.setState({
+      showDialog: false,
+      showSnackbar: true,
+      isLoaded: true,
+      snackbar: (
+        <Snackbar
+          message={"Something went wrong. Please try again."}
+          hideSnackbar={this.hideSnackbar}
+        />
+      )
     });
   };
 
@@ -289,7 +317,7 @@ class CheckIn extends Component {
       return this.state.filteredFlightData[flightIndex].passengersDetail.map(
         (passenger, index) => {
           return (
-            <div key={passenger.id} className="passenger-detail">
+            <div key={passenger._id} className="passenger-detail">
               <span>{index + 1 + ". "}</span>
               <span
                 className="passenger-name"
@@ -303,8 +331,13 @@ class CheckIn extends Component {
                               this.state.filteredFlightData[flightIndex]
                                 .seatsDetail
                             }
+                            flightDetail={
+                              this.state.filteredFlightData[flightIndex]
+                            }
                             passenger={passenger}
                             hideDialog={this.hideDialog}
+                            hideFilters={this.hideFilters}
+                            errorCloseDialog={this.errorCloseDialog}
                           />
                         )
                       })

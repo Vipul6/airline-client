@@ -1,15 +1,9 @@
-.dialog-container {
-  .dialog-content {
-    width: 400px;
-
-    .material-select {
-      width: 200px;
-    }
-  }
-}
-
 .MuiSelect-root {
   height: 0 !important;
+}
+
+.MuiDialogTitle-root {
+  height: 20px;
 }
 
 .MuiOutlinedInput-input {
@@ -22,11 +16,48 @@
     max-height: calc(100% - 70%) !important;
     top: 53.5% !important;
   }
+
+  .dialog-container {
+    .dialog-content {
+      width: 400px;
+
+      .material-select {
+        width: 200px;
+      }
+    }
+  }
+
+  .MuiTypography-h6 {
+    font-weight: bold !important;
+  }
+
+  .MuiInputLabel-animated {
+    font-size: medium !important;
+  }
 }
 
 @media only screen and (max-width: 500px) {
   .MuiMenu-paper {
     max-height: calc(100% - 70%) !important;
     top: 55% !important;
+  }
+
+  .dialog-container {
+    .dialog-content {
+      width: 300px;
+
+      .material-select {
+        width: 150px;
+      }
+    }
+  }
+
+  .MuiTypography-h6 {
+    font-size: medium !important;
+    font-weight: bold !important;
+  }
+
+  .MuiInputLabel-animated {
+    font-size: small !important;
   }
 }
