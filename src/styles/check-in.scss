@@ -30,11 +30,13 @@ $seat-bgcolor: #ffff00;
           .seat-occupied {
             color: $occupied-color;
             background: $grid-occupied-bgcolor;
+            cursor: pointer;
           }
 
           .seat-vaccant {
             color: $vacant-color;
             background: $grid-vacant-bgcolor;
+            pointer-events: none;
           }
 
           .seat-occupied,
@@ -125,7 +127,6 @@ $seat-bgcolor: #ffff00;
             background: $name-bgcolor;
             padding: 3px;
             border-radius: 4px;
-            
           }
 
           .passenger-name:hover {
@@ -206,13 +207,13 @@ $seat-bgcolor: #ffff00;
 
 @media only screen and (min-width: 501px) {
   .filter-card-container {
-    width: 100%
+    width: 300px;
   }
 }
 
 @media only screen and (max-width: 800px) {
   .filter-card-container {
-    width: 60%
+    width: 60%;
   }
 }
 
@@ -221,7 +222,6 @@ $seat-bgcolor: #ffff00;
     width: 90%;
   }
 }
-
 
 @media only screen and (max-width: 500px) {
   .filter-card-container {

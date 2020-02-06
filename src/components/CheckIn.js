@@ -13,6 +13,7 @@ import Snackbar from "./Snackbar";
 import Spinner from "./Spinner";
 import "../styles/check-in.scss";
 import ChangeSeatDialog from "./ChangeSeatDialog";
+import UpdateCheckInDialog from "./UpdateCheckInDialog";
 
 const fliterIcon = require("../assets/svg/filter-list.svg");
 const downArrowIcon = require("../assets/svg/down-arrow.svg");
@@ -31,8 +32,10 @@ class CheckIn extends Component {
       checkInRequired: false,
       wheelChair: false,
       infants: false,
-      showDialog: false,
-      dialogContent: null
+      showSeatDialog: false,
+      seatDialogContent: null,
+      showCheckinDialog: false,
+      checkinDialogContent: null
     };
   }
 
@@ -114,6 +117,12 @@ class CheckIn extends Component {
             <div key={seat.number} className="outer-grid">
               <div
                 className={seat.isOccupied ? "seat-occupied" : "seat-vaccant"}
+                onClick={() =>
+                  this.updateUserCheckin(
+                    this.state.flightsDetail[flightIndex],
+                    seat
+                  )
+                }
               >
                 <div className="seat-details">
                   <span>{seat.number}</span>
@@ -220,6 +229,14 @@ class CheckIn extends Component {
     });
   };
 
+  hideCheckinDialog = () => {
+    this.setState({
+      showCheckinDialog: false,
+      flightsDetail: this.props.flightDetails,
+      filteredFlightData: this.props.flightDetails
+    });
+  };
+
   updateCheckbox = name => event => {
     this.setState(
       {
@@ -291,7 +308,7 @@ class CheckIn extends Component {
   };
   hideDialog = () => {
     this.setState({
-      showDialog: false,
+      showSeatDialog: false,
       flightsDetail: this.props.flightDetails,
       filteredFlightData: this.props.flightDetails
     });
@@ -299,7 +316,8 @@ class CheckIn extends Component {
 
   errorCloseDialog = () => {
     this.setState({
-      showDialog: false,
+      showSeatDialog: false,
+      showCheckinDialog: false,
       showSnackbar: true,
       isLoaded: true,
       snackbar: (
@@ -324,8 +342,8 @@ class CheckIn extends Component {
                 onClick={() =>
                   this.checkSeatAvailability()
                     ? this.setState({
-                        showDialog: true,
-                        dialogContent: (
+                        showSeatDialog: true,
+                        seatDialogContent: (
                           <ChangeSeatDialog
                             seatsDetail={
                               this.state.filteredFlightData[flightIndex]
@@ -342,7 +360,7 @@ class CheckIn extends Component {
                         )
                       })
                     : this.setState({
-                        showDialog: false,
+                        showSeatDialog: false,
                         showSnackbar: true,
                         isLoaded: true,
                         snackbar: (
@@ -369,6 +387,27 @@ class CheckIn extends Component {
           );
         }
       );
+    }
+  };
+
+  updateUserCheckin = (flightDetail, seatDetail) => {
+    if (seatDetail.isOccupied) {
+      const passengerIndex = flightDetail.passengersDetail.findIndex(
+        passenger => passenger._id === seatDetail.passengerId
+      );
+
+      this.setState({
+        showCheckinDialog: true,
+        checkinDialogContent: (
+          <UpdateCheckInDialog
+            passenger={flightDetail.passengersDetail[passengerIndex]}
+            flightDetail={flightDetail}
+            hideCheckinDialog={this.hideCheckinDialog}
+            hideFilters={this.hideFilters}
+            errorCloseDialog={this.errorCloseDialog}
+          />
+        )
+      });
     }
   };
 
@@ -405,7 +444,12 @@ class CheckIn extends Component {
               </div>
             </div>
             <React.Fragment>
-              {this.state.showDialog ? this.state.dialogContent : null}
+              {this.state.showSeatDialog ? this.state.seatDialogContent : null}
+            </React.Fragment>
+            <React.Fragment>
+              {this.state.showCheckinDialog
+                ? this.state.checkinDialogContent
+                : null}
             </React.Fragment>
           </div>
         )}

@@ -1,0 +1,17 @@
+$name-color: #9118d6;
+
+.dialog-container {
+  .dialog-content {
+    .user-container {
+      margin-bottom: 10px;
+
+      .name-field-label {
+        font-weight: bold;
+      }
+      .name-field {
+        font-weight: bold;
+        color: $name-color;
+      }
+    }
+  }
+}
