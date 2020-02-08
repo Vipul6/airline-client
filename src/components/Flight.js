@@ -28,7 +28,7 @@ class Flight extends Component {
     if (!this.props.flightDetails.length) {
       Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
         .then(res => {
-          this.props.getFlightDetails(res.data.data);
+          this.props.setFlightDetails(res.data.data);
           this.setState({
             flightsDetail: res.data.data,
             isLoaded: true
@@ -174,8 +174,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getFlightDetails: details =>
-      dispatch({ type: "GETFLIGHTDETAILS", payload: details })
+    setFlightDetails: details =>
+      dispatch({ type: "SETFLIGHTDETAILS", payload: details })
   };
 };
 

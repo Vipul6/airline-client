@@ -9,6 +9,7 @@ const AsyncAbout = lazy(() => import("./About"));
 const AsyncContact = lazy(() => import("./Contact"));
 const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
 const AsyncCheckIn = lazy(() => import("./CheckIn"));
+const AsyncInFlight = lazy(() => import("./InFlight"));
 
 const flightLogo = require("../assets/images/flight-logo.png");
 const googleLogo = require("../assets/images/google-logo.png");
@@ -130,6 +131,13 @@ const Header = () => {
               exact
               render={props => (
                 <AsyncCheckIn {...props} updateActiveLink={updateActiveLink} />
+              )}
+            />
+            <Route
+              path="/flights/:flightId/in-flight"
+              exact
+              render={props => (
+                <AsyncInFlight {...props} updateActiveLink={updateActiveLink} />
               )}
             />
             <Route path="*" component={AsyncPageNotFound} />

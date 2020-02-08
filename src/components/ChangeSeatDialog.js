@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import "../styles/seat-dialog.scss";
 import Axios from "axios";
-import { getFlightDetails } from "../redux/actions";
+import { setFlightDetails } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 const transition = React.forwardRef((props, ref) => {
@@ -45,9 +45,10 @@ const ChangeSeatDialog = props => {
       `${process.env.REACT_APP_BASE_URL}flights/${props.flightDetail._id}/change-seat/${props.passenger._id}/${seat}`
     )
       .then(res => {
-        dispatch(getFlightDetails(res.data.data));
+        dispatch(setFlightDetails(res.data.data));
         props.hideFilters();
         props.hideDialog();
+        props.successCloseDialog("Seat changed successfully.");
       })
       .catch(err => {
         props.hideFilters();

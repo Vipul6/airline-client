@@ -1,6 +1,6 @@
-export const getFlightDetails = data => {
+export const setFlightDetails = data => {
   return {
-    type: "GETFLIGHTDETAILS",
+    type: "SETFLIGHTDETAILS",
     payload: data
   };
 };

@@ -65,7 +65,7 @@ class CheckIn extends Component {
     if (!this.props.flightDetails.length) {
       Axios.get(`${process.env.REACT_APP_BASE_URL}flights/details`)
         .then(res => {
-          this.props.getFlightDetails(res.data.data);
+          this.props.setFlightDetails(res.data.data);
           this.setState(
             {
               flightsDetail: res.data.data,
@@ -329,6 +329,20 @@ class CheckIn extends Component {
     });
   };
 
+  successCloseDialog = msg => {
+    this.setState({
+      showSnackbar: true,
+      isLoaded: true,
+      snackbar: (
+        <Snackbar
+          message={msg}
+          alertType="success"
+          hideSnackbar={this.hideSnackbar}
+        />
+      )
+    });
+  };
+
   getPassengersDetail = () => {
     const flightIndex = this.getFlightIndex();
     if (flightIndex > -1) {
@@ -356,6 +370,7 @@ class CheckIn extends Component {
                             hideDialog={this.hideDialog}
                             hideFilters={this.hideFilters}
                             errorCloseDialog={this.errorCloseDialog}
+                            successCloseDialog={this.successCloseDialog}
                           />
                         )
                       })
@@ -405,6 +420,7 @@ class CheckIn extends Component {
             hideCheckinDialog={this.hideCheckinDialog}
             hideFilters={this.hideFilters}
             errorCloseDialog={this.errorCloseDialog}
+            successCloseDialog={this.successCloseDialog}
           />
         )
       });
@@ -464,8 +480,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getFlightDetails: details =>
-      dispatch({ type: "GETFLIGHTDETAILS", payload: details })
+    setFlightDetails: details =>
+      dispatch({ type: "SETFLIGHTDETAILS", payload: details })
   };
 };
 

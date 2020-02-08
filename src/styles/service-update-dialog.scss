@@ -1,0 +1,41 @@
+.service-container {
+  display: flex;
+
+  .service-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+
+    .services {
+      width: 100%;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0.5;
+  }
+}
+
+.action-container {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+
+  .left-side-action {
+    flex: 1;
+  }
+
+  .right-side-action {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (min-width: 651px) {
+  .dialog-content {
+    width: 500px;
+  }
+}

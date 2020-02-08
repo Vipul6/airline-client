@@ -1,0 +1,124 @@
+$name-bgcolor: #d5eeff;
+$name-hover-bgcolor: #bfe4ff;
+$white-color: #ffffff;
+$black-color: #000000;
+$grid-normal-bgcolor: #f3008e;
+$grid-special-bgcolor: #9c33ff;
+$grid-vacant-bgcolor: #04ff42;
+$border-color: #3366cc;
+$seat-bgcolor: #ffff00;
+
+.in-flight-container {
+  .in-flight-view {
+    display: flex;
+    padding: 15px;
+    justify-content: center;
+
+    .grid-container {
+      width: 490px;
+
+      .grid-view {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        justify-content: center;
+
+        .outer-grid {
+          width: 55px;
+          height: 55px;
+          border-radius: 10px;
+          border: 3px solid $border-color;
+          margin: 4px;
+
+          .normal {
+            color: $white-color;
+            background: $grid-normal-bgcolor;
+            cursor: pointer;
+          }
+
+          .special {
+            color: $white-color;
+            background: $grid-special-bgcolor;
+            cursor: pointer;
+          }
+
+          .seat-vaccant {
+            color: $black-color;
+            background: $grid-vacant-bgcolor;
+            pointer-events: none;
+          }
+
+          .normal,
+          .special,
+          .seat-vaccant {
+            height: 35px;
+            width: 35px;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+
+            .seat-details {
+              display: flex;
+              align-items: center;
+              width: 100%;
+              justify-content: center;
+            }
+          }
+        }
+      }
+      .grid-text {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .status-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .status-wrapper {
+      display: flex;
+      width: 320px;
+      justify-content: space-evenly;
+
+      .special-status {
+        display: flex;
+
+        .circle {
+          height: 15px;
+          width: 15px;
+          background-color: $grid-special-bgcolor;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+
+      .vaccant-status {
+        display: flex;
+
+        .circle {
+          height: 15px;
+          width: 15px;
+          background-color: $grid-vacant-bgcolor;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+
+      .normal-status {
+        display: flex;
+
+        .circle {
+          height: 15px;
+          width: 15px;
+          background-color: $grid-normal-bgcolor;
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

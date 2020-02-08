@@ -1,6 +1,6 @@
 const flightDetails = (state = [], action) => {
   switch (action.type) {
-    case "GETFLIGHTDETAILS":
+    case "SETFLIGHTDETAILS":
       return action.payload;
     default:
       return state;
