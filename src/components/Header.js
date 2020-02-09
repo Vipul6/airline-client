@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Spinner from "./Spinner";
 import Home from "./Home";
 import "../styles/header.scss";
+import { ClickAwayListener } from "@material-ui/core";
 
 const AsyncFlight = lazy(() => import("./Flight"));
 const AsyncAbout = lazy(() => import("./About"));
@@ -13,13 +14,29 @@ const AsyncInFlight = lazy(() => import("./InFlight"));
 
 const flightLogo = require("../assets/images/flight-logo.png");
 const googleLogo = require("../assets/images/google-logo.png");
+const adminIcon = require("../assets/images/admin-icon.png");
+const staffIcon = require("../assets/images/staff-icon.png");
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
   const [menu, setMenuClass] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const updateActiveLink = link => {
     setActiveLink(link);
+  };
+
+  const getRoles = () => {
+    const role = sessionStorage.getItem("role");
+    return (
+      <div onClick={() => setOpen(!open)}>
+        <img
+          src={role === "admin" ? adminIcon : staffIcon}
+          alt="role"
+          className="roles-img"
+        />
+      </div>
+    );
   };
 
   return (
@@ -73,19 +90,23 @@ const Header = () => {
                 </Link>
               </nav>
               <div className="roles-container">
-                <button
-                  className="login-button"
-                  onClick={() =>
-                    (window.location.href = `${process.env.REACT_APP_BASE_URL}auth/passport/google`)
-                  }
-                >
-                  <img
-                    className="google-logo"
-                    alt="google-logo"
-                    src={googleLogo}
-                  ></img>
-                  <span className="google-logo-text">Sign in</span>
-                </button>
+                {sessionStorage.getItem("id") ? (
+                  getRoles()
+                ) : (
+                  <button
+                    className="login-button"
+                    onClick={() =>
+                      (window.location.href = `${process.env.REACT_APP_BASE_URL}auth/passport/google`)
+                    }
+                  >
+                    <img
+                      className="google-logo"
+                      alt="google-logo"
+                      src={googleLogo}
+                    ></img>
+                    <span className="google-logo-text">Sign in</span>
+                  </button>
+                )}
               </div>
               <div
                 className={menu ? "menu" : "menu-open"}
@@ -97,6 +118,34 @@ const Header = () => {
               </div>
             </div>
           </header>
+
+          {open ? (
+            <ClickAwayListener onClickAway={() => setOpen(false)}>
+              <div className="role-wrapper-container">
+                <div className="role-wrapper">
+                  <div className="role-options">
+                    <span
+                      className="role"
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                    >
+                      Staff
+                    </span>
+                    <span
+                      className="role"
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                    >
+                      Admin
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ClickAwayListener>
+          ) : null}
+
           <Switch>
             <Route
               exact

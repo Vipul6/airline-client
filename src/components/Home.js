@@ -13,7 +13,6 @@ const Home = props => {
 
   const googleId = props.location.search;
   useEffect(() => {
-
     if (googleId) {
       Axios.get(
         `${process.env.REACT_APP_BASE_URL}auth/users?id=${googleId.substr(8)}`
@@ -22,6 +21,7 @@ const Home = props => {
           const user = res.data.data;
           sessionStorage.setItem("userName", user.name);
           sessionStorage.setItem("id", user.id);
+          sessionStorage.setItem("role", "staff");
 
           updateSnackbar({
             showSnackbar: true,
@@ -37,6 +37,8 @@ const Home = props => {
         .catch(err => {
           sessionStorage.removeItem("userName");
           sessionStorage.removeItem("id");
+          sessionStorage.removeItem("role");
+
           let errorMessage = "Server is down, Please try again after sometime.";
           if (err.response && err.response.status === 401) {
             errorMessage = "Not authorized";

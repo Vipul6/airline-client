@@ -23,7 +23,7 @@ $link-hover-color: #61dafb;
       display: flex;
       width: 100%;
       height: 60px;
-      
+
       .logo {
         display: flex;
         height: 100%;
@@ -118,20 +118,29 @@ $link-hover-color: #61dafb;
       .login-button:hover .google-logo {
         animation: rotate 1s;
       }
+
+      .roles-img {
+        width: 35px;
+        height: 35px;
+        margin-top: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+      }
     }
 
     .menu {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-top: -5px;
+      margin-top: -3px;
       padding-left: 5px;
       padding-right: 5px;
 
       span {
         background: $nav-font-color;
-        width: 30px;
-        height: 4px;
+        width: 25px;
+        height: 3px;
         transform: rotate(0deg);
         transition: 1s ease;
         margin-top: 5px;
@@ -142,14 +151,13 @@ $link-hover-color: #61dafb;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin-top: -5px;
       padding-left: 5px;
       padding-right: 5px;
 
       span:nth-child(1) {
         background: $nav-font-color;
-        width: 30px;
-        height: 4px;
+        width: 25px;
+        height: 3px;
         transform: rotate(45deg);
         position: fixed;
         transition: 1s ease-in-out;
@@ -161,8 +169,8 @@ $link-hover-color: #61dafb;
 
       span:nth-child(3) {
         background: $nav-font-color;
-        width: 30px;
-        height: 4px;
+        width: 25px;
+        height: 3px;
         transform: rotate(-45deg);
         transition: 1s ease-in-out;
       }
@@ -186,5 +194,36 @@ $link-hover-color: #61dafb;
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.role-wrapper-container {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -9px;
+  margin-left: -4%;
+
+  .role-wrapper {
+    background: $nav-background;
+    border-radius: 5px;
+    padding: 15px;
+    color: $nav-font-color;
+
+    .role-options {
+      display: flex;
+      flex-direction: column;
+
+      .role {
+        padding: 5px;
+      }
+
+      .role:hover {
+        cursor: pointer;
+        color: $link-hover-color;
+      }
+    }
   }
 }

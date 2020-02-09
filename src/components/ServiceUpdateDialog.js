@@ -29,13 +29,14 @@ const ServiceUpdateDialog = props => {
   });
 
   const [services, setServices] = useState([]);
+  const [initialServices, setInitialServices] = useState([]);
 
   const normalView = () => {
     return (
       <React.Fragment>
         <div className="service-container">
           <div className="service-content">
-            <span className="services">Ancilliary services:</span>
+            <span className="services service-name">Ancilliary services:</span>
             <span className="services">
               {props.passenger.ancilliaryServices.join(", ")}
             </span>
@@ -45,6 +46,7 @@ const ServiceUpdateDialog = props => {
               color="secondary"
               onClick={() => {
                 setServices(props.passenger.ancilliaryServices);
+                setInitialServices(props.passenger.ancilliaryServices);
                 setContent({
                   title: "Add / update ancilliary services",
                   editView: true,
@@ -59,7 +61,7 @@ const ServiceUpdateDialog = props => {
 
         <div className="service-container">
           <div className="service-content">
-            <span className="services">Shopping items:</span>
+            <span className="services service-name">Shopping items:</span>
             <span className="services">
               {props.passenger.shoppingItems.join(", ")}
             </span>
@@ -69,6 +71,7 @@ const ServiceUpdateDialog = props => {
               color="secondary"
               onClick={() => {
                 setServices(props.passenger.shoppingItems);
+                setInitialServices(props.passenger.shoppingItems);
                 setContent({
                   title: "Add / update  shopping items",
                   editView: true,
@@ -83,7 +86,7 @@ const ServiceUpdateDialog = props => {
 
         <div className="service-container">
           <div className="service-content">
-            <span className="services">Meals:</span>
+            <span className="services service-name">Meals:</span>
             <span className="services">{props.passenger.meals.join(", ")}</span>
           </div>
           <div className="action-button">
@@ -91,6 +94,7 @@ const ServiceUpdateDialog = props => {
               color="secondary"
               onClick={() => {
                 setServices(props.passenger.meals);
+                setInitialServices(props.passenger.meals);
                 setContent({
                   title: "Add / update meals",
                   editView: true,
@@ -147,6 +151,30 @@ const ServiceUpdateDialog = props => {
     );
   };
 
+  const hasServiceChanged = () => {
+    return (
+      JSON.stringify(initialServices.sort()) === JSON.stringify(services.sort())
+    );
+  };
+
+  const handleSubmit = () => {
+    const passengerData = JSON.parse(JSON.stringify(props.passenger));
+    passengerData[content.key] = services;
+    Axios.put(
+      `${process.env.REACT_APP_BASE_URL}flights/${props.flightDetail._id}/passengers/${props.passenger._id}`,
+      passengerData
+    )
+      .then(res => {
+        dispatch(setFlightDetails(res.data.data));
+        props.hideServiceDialog();
+        props.successCloseDialog("Services updated successfully.");
+      })
+      .catch(err => {
+        props.hideServiceDialog();
+        props.errorCloseDialog();
+      });
+  };
+
   return (
     <React.Fragment>
       <Dialog open={true} keepMounted TransitionComponent={transition}>
@@ -162,6 +190,7 @@ const ServiceUpdateDialog = props => {
                   color="secondary"
                   onClick={() => {
                     setServices([]);
+                    setInitialServices([]);
                     setContent({
                       editView: false,
                       title: `${props.passenger.name}'s services`,
@@ -174,6 +203,7 @@ const ServiceUpdateDialog = props => {
                 </Button>
               </div>
             ) : null}
+
             <div className="right-side-action">
               <Button
                 color="primary"
@@ -182,6 +212,17 @@ const ServiceUpdateDialog = props => {
               >
                 Cancel
               </Button>
+              {content.editView ? (
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  className="submit-action-button"
+                  disabled={hasServiceChanged()}
+                  onClick={() => handleSubmit()}
+                >
+                  Submit
+                </Button>
+              ) : null}
             </div>
           </div>
         </DialogActions>
