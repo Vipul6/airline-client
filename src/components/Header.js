@@ -26,16 +26,27 @@ const Header = () => {
     setActiveLink(link);
   };
 
+  const handleRoleClick = () => {
+    setOpen(prev => !prev);
+  };
+
+  const handleRoleClickAway = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 100);
+  };
+
   const getRoles = () => {
     const role = sessionStorage.getItem("role");
     return (
-      <div onClick={() => setOpen(!open)}>
+      <ClickAwayListener onClickAway={handleRoleClickAway}>
         <img
           src={role === "admin" ? adminIcon : staffIcon}
           alt="role"
           className="roles-img"
+          onClick={handleRoleClick}
         />
-      </div>
+      </ClickAwayListener>
     );
   };
 
@@ -120,30 +131,14 @@ const Header = () => {
           </header>
 
           {open ? (
-            <ClickAwayListener onClickAway={() => setOpen(false)}>
-              <div className="role-wrapper-container">
-                <div className="role-wrapper">
-                  <div className="role-options">
-                    <span
-                      className="role"
-                      onClick={() => {
-                        setOpen(!open);
-                      }}
-                    >
-                      Staff
-                    </span>
-                    <span
-                      className="role"
-                      onClick={() => {
-                        setOpen(!open);
-                      }}
-                    >
-                      Admin
-                    </span>
-                  </div>
+            <div className="role-wrapper-container">
+              <div className="role-wrapper">
+                <div className="role-options">
+                  <span className="role">Staff</span>
+                  <span className="role">Admin</span>
                 </div>
               </div>
-            </ClickAwayListener>
+            </div>
           ) : null}
 
           <Switch>
