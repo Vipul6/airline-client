@@ -1,0 +1,106 @@
+$name-bgcolor: #d5eeff;
+$name-hover-bgcolor: #bfe4ff;
+$seat-bgcolor: #ffff00;
+
+.manage-passengers-container {
+  .passenger-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    align-items: center;
+
+    .filter-card-container {
+      margin-top: 10px;
+
+      .filter-card-content {
+        padding: 5px;
+
+        .filter-card-header {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          .svg-container {
+            display: flex;
+            align-items: flex-end;
+            flex: 0.1;
+
+            .expand-more {
+              align-items: flex-end;
+              margin-left: auto;
+              transform: rotate(0deg);
+              transition: 0.4s ease-in-out;
+              width: 30px;
+              height: 30px;
+              cursor: pointer;
+            }
+            .expanded {
+              margin-left: auto;
+              transform: rotate(180deg);
+              transition: 0.4s ease-in-out;
+              width: 30px;
+              height: 30px;
+              cursor: pointer;
+            }
+          }
+
+          .filter-text {
+            margin-left: 5px;
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    .passengers-list {
+      margin-top: 10px;
+      margin-bottom: 20px;
+
+      .passenger-detail {
+        margin-top: 10px;
+
+        .passenger-name {
+          font-weight: 550;
+          font-size: 15px;
+          background: $name-bgcolor;
+          padding: 3px;
+          border-radius: 4px;
+        }
+
+        .passenger-name:hover {
+          background: $name-hover-bgcolor;
+          cursor: pointer;
+        }
+
+        .seat-number {
+          margin-left: 5px;
+          background: $seat-bgcolor;
+          border-radius: 5px;
+          padding: 3px;
+        }
+
+        .ancilliary-service {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .filter-card-container {
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: 610px) {
+  .filter-card-container {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .filter-card-container {
+    width: 100%;
+  }
+}

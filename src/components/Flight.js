@@ -73,6 +73,78 @@ class Flight extends Component {
     }
   };
 
+  getCardContent = data => {
+    return (
+      <CardContent>
+        <div className="accordion-container">
+          {sessionStorage.role === "Admin" ? (
+            <div className="accordion-admin-action-btn">
+              <Button
+                onClick={() => {
+                  if (this.checkAuthorization()) {
+                    this.props.history.push(
+                      `flights/${data._id}/manage-passengers`
+                    );
+                  } else {
+                    this.setSnackbarMessage("Please login first.");
+                  }
+                }}
+                variant="outlined"
+                color="primary"
+              >
+                Manage passengers
+              </Button>
+              <Button
+                onClick={() => {
+                  if (this.checkAuthorization()) {
+                    this.props.history.push(
+                      `flights/${data._id}/manage-services`
+                    );
+                  } else {
+                    this.setSnackbarMessage("Please login first.");
+                  }
+                }}
+                variant="outlined"
+                color="secondary"
+              >
+                Manage services
+              </Button>
+            </div>
+          ) : (
+            <div className="accordion-action-btn">
+              <Button
+                onClick={() => {
+                  if (this.checkAuthorization()) {
+                    this.props.history.push(`flights/${data._id}/check-in`);
+                  } else {
+                    this.setSnackbarMessage("Please login first.");
+                  }
+                }}
+                variant="outlined"
+                color="primary"
+              >
+                Check in
+              </Button>
+              <Button
+                onClick={() => {
+                  if (this.checkAuthorization()) {
+                    this.props.history.push(`flights/${data._id}/in-flight`);
+                  } else {
+                    this.setSnackbarMessage("Please login first.");
+                  }
+                }}
+                variant="outlined"
+                color="secondary"
+              >
+                In flight
+              </Button>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    );
+  };
+
   getCardsData() {
     return this.state.flightsDetail.map(data => {
       return (
@@ -106,40 +178,7 @@ class Flight extends Component {
             timeout="auto"
             unmountOnExit
           >
-            <CardContent>
-              <div className="accordion-container">
-                <div className="accordion-action-btn">
-                  <Button
-                    onClick={() => {
-                      if (this.checkAuthorization()) {
-                        this.props.history.push(`flights/${data._id}/check-in`);
-                      } else {
-                        this.setSnackbarMessage("Please login first.");
-                      }
-                    }}
-                    variant="outlined"
-                    color="primary"
-                  >
-                    Check in
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      if (this.checkAuthorization()) {
-                        this.props.history.push(
-                          `flights/${data._id}/in-flight`
-                        );
-                      } else {
-                        this.setSnackbarMessage("Please login first.");
-                      }
-                    }}
-                    variant="outlined"
-                    color="secondary"
-                  >
-                    In flight
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
+            {this.getCardContent(data)}
           </Collapse>
         </Card>
       );

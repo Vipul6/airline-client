@@ -24,7 +24,7 @@ const Home = props => {
           const user = res.data.data;
           sessionStorage.setItem("userName", user.name);
           sessionStorage.setItem("id", user.id);
-          sessionStorage.setItem("role", "staff");
+          sessionStorage.setItem("role", "Staff");
           dispatch(setUserDetails(sessionStorage));
 
           updateSnackbar({

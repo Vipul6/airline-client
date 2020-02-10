@@ -12,6 +12,8 @@ const AsyncContact = lazy(() => import("./Contact"));
 const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
 const AsyncCheckIn = lazy(() => import("./CheckIn"));
 const AsyncInFlight = lazy(() => import("./InFlight"));
+const AsyncManagePassengers = lazy(() => import("./ManagePassengers"));
+const AsyncManageServices = lazy(() => import("./ManageServices"));
 
 const flightLogo = require("../assets/images/flight-logo.png");
 const googleLogo = require("../assets/images/google-logo.png");
@@ -43,7 +45,7 @@ const Header = () => {
     return (
       <ClickAwayListener onClickAway={handleRoleClickAway}>
         <img
-          src={role === "admin" ? adminIcon : staffIcon}
+          src={role === "Admin" ? adminIcon : staffIcon}
           alt="role"
           className="roles-img"
           onClick={handleRoleClick}
@@ -207,6 +209,26 @@ const Header = () => {
               exact
               render={props => (
                 <AsyncInFlight {...props} updateActiveLink={updateActiveLink} />
+              )}
+            />
+            <Route
+              path="/flights/:flightId/manage-passengers"
+              exact
+              render={props => (
+                <AsyncManagePassengers
+                  {...props}
+                  updateActiveLink={updateActiveLink}
+                />
+              )}
+            />
+            <Route
+              path="/flights/:flightId/manage-services"
+              exact
+              render={props => (
+                <AsyncManageServices
+                  {...props}
+                  updateActiveLink={updateActiveLink}
+                />
               )}
             />
             <Route path="*" component={AsyncPageNotFound} />

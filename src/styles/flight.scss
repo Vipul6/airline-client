@@ -50,10 +50,25 @@ $shadow: 0 0 20px #21212133;
         justify-content: space-between;
         width: 185px;
       }
+
+      .accordion-admin-action-btn {
+        display: flex;
+        justify-content: space-between;
+        width: 330px;
+      }
     }
   }
 
   .card-view:hover {
     box-shadow: $shadow;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .accordion-admin-action-btn {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 80px;
   }
 }
