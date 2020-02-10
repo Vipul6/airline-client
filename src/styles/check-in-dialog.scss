@@ -1,7 +1,7 @@
 $name-color: #9118d6;
 
 .dialog-container {
-  .dialog-content {
+  .check-in-dialog-content {
     .user-container {
       margin-bottom: 10px;
 
@@ -13,5 +13,26 @@ $name-color: #9118d6;
         color: $name-color;
       }
     }
+  }
+}
+
+
+@media only screen and (min-width: 410px) {
+  .check-in-dialog-content {
+    width: 290px;
+  }
+}
+
+
+@media only screen and (min-width: 500px) {
+  .check-in-dialog-content {
+    width: 390px;
+  }
+}
+
+
+@media only screen and (min-width: 651px) {
+  .check-in-dialog-content {
+    width: 530px;
   }
 }

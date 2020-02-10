@@ -58,13 +58,13 @@ const UpdateCheckInDialog = props => {
         className="dialog-container"
       >
         <DialogTitle>{"Update check-in status"}</DialogTitle>
-        <DialogContent className="dialog-content">
+        <DialogContent className="check-in-dialog-content">
           <div className="user-container">
             <span className="name-field-label">Occupied by: </span>
             <span className="name-field">{props.passenger.name}</span>
           </div>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Check-in status</FormLabel>
+          <FormControl>
+            <FormLabel>Check-in status</FormLabel>
             <RadioGroup value={checkin} onChange={handleChange}>
               <FormControlLabel
                 value={false}
