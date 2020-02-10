@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import Home from "./Home";
 import "../styles/header.scss";
 import { ClickAwayListener } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 const AsyncFlight = lazy(() => import("./Flight"));
 const AsyncAbout = lazy(() => import("./About"));
@@ -21,6 +22,7 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState("");
   const [menu, setMenuClass] = useState(true);
   const [open, setOpen] = useState(false);
+  const userDetails = useSelector(state => state.userDetails);
 
   const updateActiveLink = link => {
     setActiveLink(link);
@@ -48,6 +50,13 @@ const Header = () => {
         />
       </ClickAwayListener>
     );
+  };
+
+  const updateRole = userRole => {
+    const role = sessionStorage.role;
+    if (role && role !== userRole) {
+      sessionStorage.setItem("role", userRole);
+    }
   };
 
   return (
@@ -101,7 +110,7 @@ const Header = () => {
                 </Link>
               </nav>
               <div className="roles-container">
-                {sessionStorage.getItem("id") ? (
+                {userDetails || sessionStorage.id ? (
                   getRoles()
                 ) : (
                   <button
@@ -134,8 +143,24 @@ const Header = () => {
             <div className="role-wrapper-container">
               <div className="role-wrapper">
                 <div className="role-options">
-                  <span className="role">Staff</span>
-                  <span className="role">Admin</span>
+                  <Link
+                    className={
+                      sessionStorage.role === "Staff" ? "role active" : "role"
+                    }
+                    onClick={() => updateRole("Staff")}
+                    to="/"
+                  >
+                    Staff
+                  </Link>
+                  <Link
+                    className={
+                      sessionStorage.role === "Admin" ? "role active" : "role"
+                    }
+                    onClick={() => updateRole("Admin")}
+                    to="/"
+                  >
+                    Admin
+                  </Link>
                 </div>
               </div>
             </div>

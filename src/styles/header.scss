@@ -218,6 +218,11 @@ $link-hover-color: #61dafb;
 
       .role {
         padding: 5px;
+        color: $nav-font-color;
+      }
+
+      .active {
+        color: $link-hover-color;
       }
 
       .role:hover {

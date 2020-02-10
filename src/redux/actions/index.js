@@ -4,3 +4,10 @@ export const setFlightDetails = data => {
     payload: data
   };
 };
+
+export const setUserDetails = data => {
+  return {
+    type: "SETUSERDETAILS",
+    payload: data
+  };
+};

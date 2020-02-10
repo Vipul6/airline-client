@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Snackbar from "./Snackbar";
+import { setUserDetails } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 const Home = props => {
   const [snackbar, updateSnackbar] = useState({ showSnackbar: false });
+  const dispatch = useDispatch();
 
   const hideSnackbar = () => {
     updateSnackbar({
@@ -22,6 +25,7 @@ const Home = props => {
           sessionStorage.setItem("userName", user.name);
           sessionStorage.setItem("id", user.id);
           sessionStorage.setItem("role", "staff");
+          dispatch(setUserDetails(sessionStorage));
 
           updateSnackbar({
             showSnackbar: true,
@@ -50,8 +54,10 @@ const Home = props => {
             )
           });
         });
+    } else if (sessionStorage.length && sessionStorage.id) {
+      dispatch(setUserDetails(sessionStorage));
     }
-  }, [googleId]);
+  }, [googleId, dispatch]);
 
   const routeParams = props.match.path;
 
