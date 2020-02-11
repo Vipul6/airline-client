@@ -4,14 +4,15 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
-import FlightIcon from "@material-ui/icons/Flight";
-import BusinessIcon from "@material-ui/icons/Business";
 import { useHistory } from "react-router-dom";
 import "../styles/sidebar.scss";
 
 const SideBar = props => {
-  const icons = [<HomeIcon />, <FlightIcon />, <BusinessIcon />];
+  const icons = [
+    require("../assets/svg/home-logo.svg"),
+    require("../assets/svg/flight-logo.svg"),
+    require("../assets/svg/business-logo.svg")
+  ];
   const history = useHistory();
 
   const handleClick = location => {
@@ -32,7 +33,9 @@ const SideBar = props => {
             key={text}
             onClick={() => handleClick(text.toLowerCase())}
           >
-            <ListItemIcon>{icons[index]}</ListItemIcon>
+            <ListItemIcon>
+              <img src={icons[index]} alt={text} />
+            </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
