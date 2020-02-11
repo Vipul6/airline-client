@@ -12,9 +12,11 @@
 }
 
 @media only screen and (min-width: 501px) {
-  .MuiMenu-paper {
-    max-height: calc(100% - 70%) !important;
-    top: 53.5% !important;
+  #menu- {
+    .MuiMenu-paper {
+      max-height: calc(100% - 70%) !important;
+      top: 53.5% !important;
+    }
   }
 
   .dialog-container {
@@ -37,9 +39,11 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .MuiMenu-paper {
-    max-height: calc(100% - 70%) !important;
-    top: 55% !important;
+  #menu- {
+    .MuiMenu-paper {
+      max-height: calc(100% - 70%) !important;
+      top: 53% !important;
+    }
   }
 
   .dialog-container {
@@ -47,7 +51,7 @@
       width: 300px;
 
       .material-select {
-        width: 150px;
+        width: 120px;
       }
     }
   }

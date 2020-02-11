@@ -10,9 +10,11 @@ import {
   CardContent,
   Checkbox,
   FormGroup,
-  FormControlLabel
+  FormControlLabel,
+  Button
 } from "@material-ui/core";
 import UpdatePassengerDialog from "./UpdatePassengerDialog";
+import AddPassengerDialog from "./AddPassengerDialog";
 
 const fliterIcon = require("../assets/svg/filter-list.svg");
 const downArrowIcon = require("../assets/svg/down-arrow.svg");
@@ -31,7 +33,8 @@ class ManagePassengers extends Component {
       passportNumber: false,
       address: false,
       dateOfBirth: false,
-      showUpdateDialog: false
+      showUpdateDialog: false,
+      showAddDialog: false
     };
   }
 
@@ -309,6 +312,14 @@ class ManagePassengers extends Component {
     });
   };
 
+  hideAddDialog = () => {
+    this.setState({
+      showAddDialog: false,
+      flightsDetail: this.props.flightDetails,
+      filteredFlightData: this.props.flightDetails
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -325,11 +336,34 @@ class ManagePassengers extends Component {
               <div className="passengers-list">
                 {this.getPassengersDetail()}
               </div>
+              <Button
+                color="secondary"
+                onClick={() =>
+                  this.setState({
+                    showAddDialog: true,
+                    addDialogContent: (
+                      <AddPassengerDialog
+                        hideAddDialog={this.hideAddDialog}
+                        flightDetail={
+                          this.state.flightsDetail[this.getFlightIndex()]
+                        }
+                        errorCloseDialog={this.errorCloseDialog}
+                        successCloseDialog={this.successCloseDialog}
+                      />
+                    )
+                  })
+                }
+              >
+                Add passenger
+              </Button>
             </div>
           </div>
         )}
         <React.Fragment>
           {this.state.showUpdateDialog ? this.state.updateDialogContent : null}
+        </React.Fragment>
+        <React.Fragment>
+          {this.state.showAddDialog ? this.state.addDialogContent : null}
         </React.Fragment>
       </React.Fragment>
     );

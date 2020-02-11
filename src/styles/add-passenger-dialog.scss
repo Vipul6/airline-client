@@ -1,0 +1,63 @@
+$error-color: #ff0000;
+$disabled-color: #d6d6d6;
+
+.add-passenger-container {
+  padding: 5px;
+
+  .detail-input-field {
+    margin-bottom: 15px;
+  }
+  .select-input-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .material-select {
+      width: 100px;
+      margin-left: 10px;
+    }
+
+    .seat-error {
+      margin-top: 5px;
+      margin-left: 10px;
+      color: $error-color;
+    }
+  }
+  height: 580px;
+  overflow-y: scroll;
+}
+
+.MuiSelect-root {
+  height: 0 !important;
+}
+
+.MuiDialogTitle-root {
+  height: 20px;
+}
+
+.MuiOutlinedInput-input {
+  display: flex !important;
+  align-items: center !important;
+}
+
+@media only screen and (min-width: 501px) {
+  #menu-seatNumber {
+    .MuiMenu-paper {
+      max-height: calc(100% - 70%) !important;
+      top: 49% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #menu-seatNumber {
+    .MuiMenu-paper {
+      max-height: calc(100% - 70%) !important;
+      top: 48% !important;
+    }
+  }
+}
+
+.Mui-disabled {
+  background: $disabled-color;
+}
