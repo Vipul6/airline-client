@@ -1,0 +1,49 @@
+$green-color: #35c735;
+$background-color: #f1f0f0;
+
+.manage-services-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .flight-card {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+    background: $background-color;
+
+    .ancilliary-services-wrapper,
+    .shopping-services-wrapper,
+    .meals-services-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 15px;
+
+      .service-title {
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      .add-service-btn {
+        color: $green-color;
+      }
+
+      .service-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .service-action-btn {
+          margin-left: 10px;
+        }
+
+        .service-name {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}
