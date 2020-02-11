@@ -1,14 +1,20 @@
-import React, { Suspense, lazy, useState } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import React, { Suspense, lazy, useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import Spinner from "./Spinner";
 import Home from "./Home";
 import "../styles/header.scss";
 import { ClickAwayListener } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import SideBar from "./Sidebar";
 
 const AsyncFlight = lazy(() => import("./Flight"));
 const AsyncAbout = lazy(() => import("./About"));
-const AsyncContact = lazy(() => import("./Contact"));
 const AsyncPageNotFound = lazy(() => import("./PageNotFound"));
 const AsyncCheckIn = lazy(() => import("./CheckIn"));
 const AsyncInFlight = lazy(() => import("./InFlight"));
@@ -24,7 +30,17 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState("");
   const [menu, setMenuClass] = useState(true);
   const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
   const userDetails = useSelector(state => state.userDetails);
+
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  });
+
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
 
   const updateActiveLink = link => {
     setActiveLink(link);
@@ -32,6 +48,10 @@ const Header = () => {
 
   const handleRoleClick = () => {
     setOpen(prev => !prev);
+  };
+
+  const hideSidebar = () => {
+    setMenuClass(true);
   };
 
   const handleRoleClickAway = () => {
@@ -101,15 +121,6 @@ const Header = () => {
                     <span className="active-bar"></span>
                   ) : null}
                 </Link>
-                <Link
-                  className={activeLink === "contact" ? "active-link" : "links"}
-                  to="/contact"
-                >
-                  Contact
-                  {activeLink === "contact" ? (
-                    <span className="active-bar"></span>
-                  ) : null}
-                </Link>
               </nav>
               <div className="roles-container">
                 {userDetails || sessionStorage.id ? (
@@ -167,6 +178,9 @@ const Header = () => {
               </div>
             </div>
           ) : null}
+          {width > 800 && !menu ? hideSidebar() : null}
+
+          {!menu ? <SideBar hideSidebar={hideSidebar} /> : null}
 
           <Switch>
             <Route
@@ -188,13 +202,6 @@ const Header = () => {
               exact
               render={props => (
                 <AsyncAbout {...props} updateActiveLink={updateActiveLink} />
-              )}
-            />
-            <Route
-              path="/contact"
-              exact
-              render={props => (
-                <AsyncContact {...props} updateActiveLink={updateActiveLink} />
               )}
             />
             <Route
@@ -231,6 +238,9 @@ const Header = () => {
                 />
               )}
             />
+            <Route path="/home" exact>
+              <Redirect to="/" />
+            </Route>
             <Route path="*" component={AsyncPageNotFound} />
           </Switch>
         </Router>
