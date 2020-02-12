@@ -11,6 +11,7 @@ import {
 import Axios from "axios";
 import { setFlightDetails } from "../redux/actions";
 import { useDispatch } from "react-redux";
+import "../styles/flight-service-dialog.scss";
 
 const transition = React.forwardRef((props, ref) => {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -107,22 +108,26 @@ const FlightServiceDialog = props => {
             : null}
         </DialogContent>
         <DialogActions>
-          <Button
-            color="primary"
-            onClick={props.hideServiceDialog}
-            variant="outlined"
-          >
-            Cancel
-          </Button>
-          <Button
-            color="secondary"
-            variant="outlined"
-            className="submit-action-button"
-            disabled={props.action !== "Delete" && props.name === data}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
+          <div className="service-dialog-action-container">
+            <div className="service-dialog-action-btn">
+              <Button
+                color="primary"
+                onClick={props.hideServiceDialog}
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                className="submit-action-button"
+                disabled={props.action !== "Delete" && props.name === data}
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
+          </div>
         </DialogActions>
       </Dialog>
     </React.Fragment>

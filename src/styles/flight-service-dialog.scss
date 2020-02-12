@@ -1,0 +1,22 @@
+.service-dialog-action-container {
+  width: 290px;
+  display: flex;
+  justify-content: flex-end;
+
+  .service-dialog-action-btn {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+@media only screen and (min-width: 351px) {
+  .service-dialog-action-btn {
+    width: 64%;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .service-dialog-action-btn {
+    width: 70%;
+  }
+}
