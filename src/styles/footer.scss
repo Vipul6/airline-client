@@ -15,8 +15,6 @@ $footer-font-color: #ffffff;
   padding: 2px;
 
   .heart-icon {
-    height: 20px;
-    width: 20px;
     margin-left: 7px;
     margin-right: 7px;
     animation: heartbeat 0.35s infinite alternate;
@@ -26,5 +24,19 @@ $footer-font-color: #ffffff;
 @keyframes heartbeat {
   to {
     transform: scale(1.1);
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .heart-icon {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .heart-icon {
+    height: 12px;
+    width: 14px;
   }
 }
