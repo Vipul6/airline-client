@@ -85,10 +85,20 @@ const FlightServiceDialog = props => {
     );
   };
 
+  const getTitle = () => {
+    return props.serviceName === "ancilliaryServices"
+      ? "ancilliary service"
+      : props.serviceName === "shoppingItems"
+      ? "shopping item"
+      : props.serviceName === "meals"
+      ? "meal service"
+      : null;
+  };
+
   return (
     <React.Fragment>
       <Dialog open={true} keepMounted TransitionComponent={transition}>
-        <DialogTitle>{`${props.action} service `}</DialogTitle>
+        <DialogTitle>{`${props.action} ${getTitle()} `}</DialogTitle>
         <DialogContent className="flight-service-dialog-content">
           {props.action === "Update" || props.action === "Add"
             ? addUpdateView()
