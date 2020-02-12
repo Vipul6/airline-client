@@ -4,6 +4,7 @@ $footer-font-color: #ffffff;
 .footer-container {
   display: flex;
   position: fixed;
+  justify-content: center;
   width: 100%;
   color: $footer-font-color;
   background: $footer-background;
