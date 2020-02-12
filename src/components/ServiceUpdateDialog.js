@@ -96,7 +96,7 @@ const ServiceUpdateDialog = props => {
                 setServices(props.passenger.meals);
                 setInitialServices(props.passenger.meals);
                 setContent({
-                  title: "Add / update meals",
+                  title: "Add / update meals preference",
                   editView: true,
                   key: "meals"
                 });
