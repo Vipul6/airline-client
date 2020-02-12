@@ -7,6 +7,8 @@ import Snackbar from "./Snackbar";
 import "../styles/flight.scss";
 
 const downArrowIcon = require("../assets/svg/down-arrow.svg");
+const flightTakeoffIcon = require("../assets/svg/flight-takeoff.svg");
+const flightLandIcon = require("../assets/svg/flight-land.svg");
 
 class Flight extends Component {
   constructor(props) {
@@ -155,8 +157,44 @@ class Flight extends Component {
           >
             <div className="card-content-container">
               <div className="card-content">
-                <p>Source: {data.source} </p>
-                <p>Destination: {data.destination}</p>
+                <div className="top-view">
+                  <div className="top-view-content">
+                    <h4>{data.name}</h4>
+                  </div>
+                </div>
+                <div className="card-view-content">
+                  <div className="left-view">
+                    <span className="flight-content-detail">
+                      <h4>Source:</h4> <span>{data.source}</span>
+                    </span>
+                    <span className="flight-content-detail">
+                      <h4>Departure time:</h4> <span>{data.departureTime}</span>
+                      <img
+                        src={flightTakeoffIcon}
+                        alt="flight-takeoff"
+                        className="flight-icon"
+                      />
+                    </span>
+                  </div>
+                  <div className="middle-view">
+                    <span className="flight-content-detail">
+                      <h4>Duration:</h4> <span>{data.duration}</span>
+                    </span>
+                  </div>
+                  <div className="right-view">
+                    <span className="flight-content-detail">
+                      <h4>Destination:</h4> <span>{data.destination}</span>
+                    </span>
+                    <span className="flight-content-detail">
+                      <h4>Arrival time:</h4> <span>{data.arrivalTime}</span>
+                      <img
+                        src={flightLandIcon}
+                        alt="flight-land"
+                        className="flight-icon"
+                      />
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div className="svg-container">

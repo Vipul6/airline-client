@@ -80,8 +80,8 @@ const FlightServiceDialog = props => {
   const deleteView = () => {
     return (
       <span>
-        Removing of item will also remove from passenger's service who has
-        choosen this service. Are you sure?
+        Are you sure? Deleting of item will also remove from passenger's service
+        who has choosen this service.
       </span>
     );
   };

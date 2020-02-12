@@ -328,7 +328,7 @@ class ManagePassengers extends Component {
         </div>
         {!this.state.isLoaded ? (
           <Spinner />
-        ) : (
+        ) : this.state.flightsDetail.length ? (
           <div className="manage-passengers-container">
             <div className="passenger-container">
               <h3>Passengers list</h3>
@@ -358,7 +358,7 @@ class ManagePassengers extends Component {
               </Button>
             </div>
           </div>
-        )}
+        ) : null}
         <React.Fragment>
           {this.state.showUpdateDialog ? this.state.updateDialogContent : null}
         </React.Fragment>

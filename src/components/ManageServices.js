@@ -144,26 +144,30 @@ class ManageServices extends Component {
     return this.state.flightsDetail[index][serviceName].map((service, idx) => {
       return (
         <div key={service} className="service-content">
-          <span>{idx + 1}.</span>
-          <span className="service-name">{service}</span>
-          <span className="service-action-btn">
-            <Button
-              color="primary"
-              onClick={() =>
-                this.showServiceDialog(serviceName, "Update", service)
-              }
-            >
-              Update
-            </Button>
-            <Button
-              color="secondary"
-              onClick={() =>
-                this.showServiceDialog(serviceName, "Delete", service)
-              }
-            >
-              Delete
-            </Button>
-          </span>
+          <div className="service-display">
+            <span>{idx + 1}.</span>
+            <span className="service-name">{service}</span>
+          </div>
+          <div className="service-display-action">
+            <span className="service-action-btn">
+              <Button
+                color="primary"
+                onClick={() =>
+                  this.showServiceDialog(serviceName, "Update", service)
+                }
+              >
+                Update
+              </Button>
+              <Button
+                color="secondary"
+                onClick={() =>
+                  this.showServiceDialog(serviceName, "Delete", service)
+                }
+              >
+                Delete
+              </Button>
+            </span>
+          </div>
         </div>
       );
     });
