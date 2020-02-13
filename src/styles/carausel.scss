@@ -1,0 +1,50 @@
+.carausel-card {
+  height: 600px;
+  border-radius: 10px !important;
+
+  .carausel-image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .carausel-card {
+    height: 500px;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .carausel-card {
+    height: 475px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .carausel-card {
+    height: 450px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .carausel-card {
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .carausel-card {
+    height: 350px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .carausel-card {
+    height: 300px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .carausel-card {
+    height: 260px;
+  }
+}

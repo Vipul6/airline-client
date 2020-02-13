@@ -70,17 +70,9 @@ const Home = props => {
       <div className="snackbar-alignment">
         {snackbar.showSnackbar ? snackbar.snackbarContent : null}
       </div>
-      <div style={styles.container}>Home</div>
+      <div>Home</div>
     </React.Fragment>
   );
-};
-
-const styles = {
-  container: {
-    marginTop: "70px",
-    paddingRight: "15px",
-    paddingLeft: "15px"
-  }
 };
 
 export default Home;
