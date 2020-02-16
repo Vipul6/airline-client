@@ -6,9 +6,12 @@ const About = props => {
   if (routeParams === "/about") {
     props.updateActiveLink("about");
   }
-  return <div className="snackbar-alignment">about
-        <Carousel />
-  </div>;
+  return (
+    <div className="snackbar-alignment">
+      about
+      <Carousel />
+    </div>
+  );
 };
 
 export default About;

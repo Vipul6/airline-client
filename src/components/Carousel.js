@@ -12,18 +12,28 @@ const Carousel = () => {
     require("../assets/images/goa.jpg")
   ];
 
-  useEffect(() => {
-    const updateIndex = () => {
+  let timerId;
+
+  const updateCarousel = () => {
+    timerId = setTimeout(() => {
       if (currentIndex === 3) {
         setIndex(0);
       } else {
         setIndex(currentIndex + 1);
       }
-    };
-    setTimeout(() => {
-      updateIndex();
     }, 2500);
-  }, [currentIndex]);
+  };
+
+  useEffect(() => {
+    updateCarousel();
+    return;
+  });
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerId);
+    };
+  });
 
   return (
     <React.Fragment>

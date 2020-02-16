@@ -33,7 +33,9 @@ const Snackbar = props => {
               : "message-container type-failure"
           }
         >
-          <span className="message">{props.message}</span>
+          <span className="message" data-testid="alert-message">
+            {props.message}
+          </span>
           <span className="cross" onClick={() => hideSnackbar()}>
             X
           </span>
