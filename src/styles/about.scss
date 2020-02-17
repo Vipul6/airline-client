@@ -1,0 +1,50 @@
+.history-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #efefef;
+
+  .about-title {
+    font-weight: bold;
+    display: flex;
+    font-size: larger;
+  }
+
+  .history-content {
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  .paragraph-wrapper {
+    display: flex;
+    margin-top: 20px;
+
+    .para-holder {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 15px;
+    }
+  }
+}
+
+.para-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.carousel-container {
+  margin-top: 35px;
+  margin-bottom: 70px;
+}
+
+.MuiContainer-maxWidthLg {
+  max-width: 90% !important;
+}
+
+@media only screen and (max-width: 700px) {
+  .paragraph-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
