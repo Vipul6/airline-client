@@ -6,8 +6,14 @@ import "../styles/app.scss";
 const App = () => {
   return (
     <React.Fragment>
-      <Header />
-      <Footer />
+      <div className="body-container-class">
+        <div className="body-content-wrapper">
+          <Header />
+        </div>
+        <div className="body-footer-container">
+          <Footer />
+        </div>
+      </div>
     </React.Fragment>
   );
 };

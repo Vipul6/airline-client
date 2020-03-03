@@ -12,3 +12,19 @@
     font-size: small;
   }
 }
+
+.body-container-class {
+  position: relative;
+  min-height: 100vh;
+
+  .body-content-wrapper {
+    padding-bottom: 2.5rem;
+  }
+
+  .body-footer-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
+}
